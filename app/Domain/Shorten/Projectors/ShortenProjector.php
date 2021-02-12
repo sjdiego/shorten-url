@@ -2,6 +2,7 @@
 
 namespace App\Domain\Shorten\Projectors;
 
+use App\Domain\Shorten\Events\ShortenHit;
 use App\Domain\Shorten\Events\ShortenCreated;
 use App\Models\Shorten;
 use DomainException;
@@ -25,5 +26,14 @@ class ShortenProjector extends Projector
         }
 
         Shorten::create($event->shortenAttributes);
+    }
+
+    public function onShortenHit(ShortenHit $event, string $aggregateUuid)
+    {
+        $shorten = Shorten::uuid($event->shortenUuid);
+
+        $shorten->hits++;
+
+        $shorten->save();
     }
 }

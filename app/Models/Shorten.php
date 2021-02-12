@@ -55,12 +55,8 @@ class Shorten extends Model
         return static::where('uuid', $uuid)->first();
     }
 
-    /**
-     * @param string $slug
-     * @return static|null
-     */
-    public static function slug(string $slug): ?self
+    public function addHit()
     {
-        return static::where('slug', $slug)->first();
+        event(new ShortenHit($this->uuid));
     }
 }

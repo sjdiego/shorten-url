@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ShortenCheckController;
 use App\Http\Controllers\ShortenCreateController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,5 +22,8 @@ Route::prefix('v1')->group(function () {
     Route::prefix('shorten')->group(function () {
         // Creates a new shorten url
         Route::post('create', ShortenCreateController::class)->name('shorten.create');
+
+        // Check if a provided slug exists in database and is valid
+        Route::get('check/{slug}', ShortenCheckController::class)->name('shorten.check');
     });
 });
