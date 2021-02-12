@@ -4,6 +4,7 @@ namespace App\Domain\Shorten\Projectors;
 
 use App\Domain\Shorten\Events\ShortenHit;
 use App\Domain\Shorten\Events\ShortenCreated;
+use App\Domain\Shorten\ShortenAggregateRoot;
 use App\Models\Shorten;
 use DomainException;
 use Illuminate\Support\Facades\Validator;
@@ -22,13 +23,13 @@ class ShortenProjector extends Projector
         ]);
 
         if ($validator->fails()) {
-            throw new DomainException();
+            throw new DomainException($validator->errors()->toJson());
         }
 
         Shorten::create($event->shortenAttributes);
     }
 
-    public function onShortenHit(ShortenHit $event, string $aggregateUuid)
+    public function onShortenHit(ShortenHit $event)
     {
         $shorten = Shorten::uuid($event->shortenUuid);
 

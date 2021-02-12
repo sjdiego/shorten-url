@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use App\Domain\Shorten\Events\ShortenCreated;
 use App\Domain\Shorten\Events\ShortenHit;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Ramsey\Uuid\Uuid;
 
 /**
  * Class Shorten
