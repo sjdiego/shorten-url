@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Shorten\Events\ShortenHit;
 use App\Http\Resources\ShortenResource;
 use App\Models\Shorten;
 use Exception;
@@ -13,7 +14,9 @@ class ShortenCheckController extends Controller
     public function __invoke(string $slug)
     {
         try {
-            $shorten = Shorten::whereSlug($slug)->firstOrFail();
+            $shorten = Shorten::whereSlug($slug)->sole();
+
+            $shorten->addHit();
 
             return response()->json(
                 ShortenResource::make($shorten),

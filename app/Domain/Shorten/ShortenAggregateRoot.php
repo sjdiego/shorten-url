@@ -21,9 +21,9 @@ class ShortenAggregateRoot extends AggregateRoot
         return $this;
     }
 
-    public function addHit(string $uuid): ShortenAggregateRoot
+    public function addHit(string $shortenUuid): ShortenAggregateRoot
     {
-        $this->recordThat(new ShortenHit($uuid));
+        $this->recordThat(new ShortenHit($shortenUuid));
 
         return $this;
     }
