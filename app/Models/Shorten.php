@@ -2,14 +2,26 @@
 
 namespace App\Models;
 
+use App\Domain\Shorten\Events\ShortenCreated;
+use App\Domain\Shorten\Events\ShortenHit;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class Shorten
+ *
  * @method static create(array $shortenAttributes)
+ *
+ * @property string uuid
+ * @property string url
+ * @property string slug
+ * @property int hits
+ * @property int max_hits
+ * @property DateTime expires_at
+ *
  * @package App\Models
  */
 class Shorten extends Model
@@ -19,7 +31,7 @@ class Shorten extends Model
     const SLUG_LEN = 5;
 
     public $fillable = ['uuid', 'url', 'slug', 'hits', 'max_hits', 'expires_at'];
-    public $casts = ['expires_at' => 'date'];
+    public $casts = ['hits' => 'int', 'max_hits' => 'int', 'expires_at' => 'date'];
 
     /**
      * @param int $chars
@@ -36,9 +48,9 @@ class Shorten extends Model
 
     /**
      * @param string $uuid
-     * @return static|null
+     * @return static
      */
-    public static function uuid(string $uuid): ?self
+    public static function uuid(string $uuid): self
     {
         return static::where('uuid', $uuid)->first();
     }
