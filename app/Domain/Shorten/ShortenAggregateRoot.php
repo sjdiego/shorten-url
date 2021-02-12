@@ -3,6 +3,7 @@
 namespace App\Domain\Shorten;
 
 use App\Domain\Shorten\Events\ShortenCreated;
+use App\Domain\Shorten\Events\ShortenHit;
 use Spatie\EventSourcing\AggregateRoots\AggregateRoot;
 
 /**
@@ -20,6 +21,9 @@ class ShortenAggregateRoot extends AggregateRoot
         return $this;
     }
 
+    public function addHit(string $uuid): ShortenAggregateRoot
+    {
+        $this->recordThat(new ShortenHit($uuid));
 
         return $this;
     }
