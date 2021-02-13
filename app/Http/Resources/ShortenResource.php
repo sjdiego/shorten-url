@@ -15,7 +15,7 @@ class ShortenResource extends JsonResource
             'url' => $this->url,
             'hits' => $this->hits,
             'max_hits' => $this->max_hits,
-            'expires_at' => Carbon::parse($this->expires_at)->toDateTimeString(),
+            'expires_at' => $this->expires_at ? Carbon::parse($this->expires_at)->toDateTimeString() : null,
         ];
     }
 }

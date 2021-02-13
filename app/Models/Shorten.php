@@ -2,7 +2,11 @@
 
 namespace App\Models;
 
+use App\Domain\Shorten\Events\ShortenHitExpired;
 use App\Domain\Shorten\Events\ShortenHit;
+use App\Domain\Shorten\Events\ShortenHitMaxReached;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -53,8 +57,37 @@ class Shorten extends Model
         return static::where('uuid', $uuid)->first();
     }
 
-    public function addHit()
+    public function addHit(): bool
     {
+        /**
+         * Check if shortened link has reached max hits
+         */
+        if (!is_null($this->max_hits) &&
+            ($this->hits >= $this->max_hits)
+        ) {
+            event(new ShortenHitMaxReached($this->uuid));
+            return false;
+        }
+
+        /**
+         * Check if shortened link has an expiring date
+         */
+        if (!is_null($this->expires_at)) {
+            $diff = CarbonInterval::compareDateIntervals(
+                Carbon::now(),
+                Carbon::parse($this->expires_at)
+            );
+
+            if ($diff) {
+                event(new ShortenHitExpired($this->uuid));
+                return false;
+            }
+        }
+
+        /**
+         * Shortened link is not expired and not reached max hits
+         */
         event(new ShortenHit($this->uuid));
+        return true;
     }
 }
