@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Shorten\Events\ShortenCreated;
-use App\Domain\Shorten\Events\ShortenHit;
+use App\Domain\Shorten\Events\{ShortenCreated, ShortenHit, ShortenHitExpired, ShortenHitMaxReached};
 use App\Domain\Shorten\ShortenAggregateRoot;
 use App\Models\Shorten;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
@@ -29,13 +29,26 @@ class HitShortenTest extends TestCase
     {
         $shorten = $this->emitShortenCreateEvent([
             'hits'      => 123,
-            'max_hits'  => 1000,
+            'max_hits'  => 100,
         ]);
 
         ShortenAggregateRoot::fake()
-            ->when(function (ShortenAggregateRoot $shortenAggregate) use ($shorten) {
-                $shortenAggregate->addHit($shorten->uuid)->persist();
-            })->assertApplied(new ShortenHit($shorten->uuid));
+            ->when(function (ShortenAggregateRoot $aggregateRoot) use ($shorten) {
+                $aggregateRoot->addHit($shorten->uuid)->persist();
+            })->assertApplied(new ShortenHitMaxReached($shorten->uuid));
+    }
+
+    /** @test */
+    public function test_hit_shorten_event_with_expired_date()
+    {
+        $shorten = $this->emitShortenCreateEvent([
+            'expires_at' => Carbon::yesterday()->toDateTimeString()
+        ]);
+
+        ShortenAggregateRoot::fake()
+            ->when(function (ShortenAggregateRoot $aggregateRoot) use ($shorten) {
+                $aggregateRoot->addHit($shorten->uuid)->persist();
+            })->assertApplied(new ShortenHitExpired($shorten->uuid));
     }
 
     /**
