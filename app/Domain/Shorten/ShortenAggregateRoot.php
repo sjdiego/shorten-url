@@ -2,7 +2,12 @@
 
 namespace App\Domain\Shorten;
 
-use App\Domain\Shorten\Events\{ShortenCreated, ShortenHit, ShortenHitExpired, ShortenHitMaxReached};
+use App\Domain\Shorten\Events\{
+    ShortenCreated,
+    ShortenHit,
+    ShortenHitMissing,
+    ShortenHitExpired,
+    ShortenHitMaxReached};
 use App\Models\Shorten;
 use Illuminate\Support\Facades\Event;
 use Spatie\EventSourcing\AggregateRoots\AggregateRoot;
@@ -26,6 +31,7 @@ class ShortenAggregateRoot extends AggregateRoot
     {
         Event::listen([
             ShortenHit::class,
+            ShortenHitMissing::class,
             ShortenHitExpired::class,
             ShortenHitMaxReached::class,
         ], function ($event) {
