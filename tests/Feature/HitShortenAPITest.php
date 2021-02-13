@@ -25,6 +25,16 @@ class HitShortenAPITest extends TestCase
     }
 
     /** @test */
+    public function test_hit_invalid_shorten()
+    {
+        $this
+            ->get(route('shorten.check', Str::random(12)))
+            ->assertStatus(JsonResponse::HTTP_NOT_FOUND)
+            ->assertDontSeeText('url')
+            ->assertSee('error');
+    }
+
+    /** @test */
     public function test_hit_with_max_hits_unreached_shorten()
     {
         $shorten = ShortenFactory::new([
