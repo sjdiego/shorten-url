@@ -2,15 +2,13 @@
 
 namespace App\Models;
 
-use App\Domain\Shorten\Events\ShortenHitExpired;
-use App\Domain\Shorten\Events\ShortenHit;
-use App\Domain\Shorten\Events\ShortenHitMaxReached;
+use App\Domain\Shorten\Events\{ShortenHit, ShortenHitExpired, ShortenHitMaxReached, ShortenHitMissing};
 use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use DateTime;
+use Illuminate\Database\Eloquent\{Model, ModelNotFoundException};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class Shorten
