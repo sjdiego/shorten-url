@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Shorten\Events\{ShortenCreated, ShortenHit, ShortenHitExpired, ShortenHitMaxReached};
+use App\Domain\Shorten\Events\{ShortenCreated, ShortenHit, ShortenHitExpired, ShortenHitMissing, ShortenHitMaxReached};
 use App\Domain\Shorten\ShortenAggregateRoot;
 use App\Models\Shorten;
 use Carbon\Carbon;

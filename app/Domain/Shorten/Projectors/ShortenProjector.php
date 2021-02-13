@@ -2,11 +2,7 @@
 
 namespace App\Domain\Shorten\Projectors;
 
-use App\Domain\Shorten\Events\ShortenHit;
-use App\Domain\Shorten\Events\ShortenCreated;
-use App\Domain\Shorten\Events\ShortenHitExpired;
-use App\Domain\Shorten\Events\ShortenHitMaxReached;
-use App\Domain\Shorten\ShortenAggregateRoot;
+use App\Domain\Shorten\Events\{ShortenHit, ShortenCreated};
 use App\Models\Shorten;
 use DomainException;
 use Illuminate\Support\Facades\Validator;
