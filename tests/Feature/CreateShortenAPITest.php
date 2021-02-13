@@ -65,7 +65,7 @@ class CreateShortenAPITest extends TestCase
         $this->get(
             route('shorten.create'),
             ShortenFactory::new()->makeOne()->toArray()
-        )->assertStatus(JsonResponse::HTTP_METHOD_NOT_ALLOWED);
+        )->assertRedirect('/');
     }
 
     /** @test */
