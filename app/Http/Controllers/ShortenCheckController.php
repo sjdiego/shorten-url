@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Shorten\Events\ShortenHit;
+use App\Http\Resources\ShortenFailedResource;
 use App\Http\Resources\ShortenResource;
 use App\Models\Shorten;
 use Exception;
@@ -16,7 +17,12 @@ class ShortenCheckController extends Controller
         try {
             $shorten = Shorten::whereSlug($slug)->sole();
 
-            $shorten->addHit();
+            if (!$shorten->addHit()) {
+                return response()->json(
+                    ShortenFailedResource::make($shorten),
+                    JsonResponse::HTTP_FORBIDDEN
+                );
+            }
 
             return response()->json(
                 ShortenResource::make($shorten),
