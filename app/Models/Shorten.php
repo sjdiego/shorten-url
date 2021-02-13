@@ -32,7 +32,7 @@ class Shorten extends Model
 
     const SLUG_LEN = 5;
 
-    public $fillable = ['uuid', 'url', 'slug', 'hits', 'max_hits', 'expires_at'];
+    public $fillable = ['uuid', 'url', 'slug', 'hits', 'max_hits', 'expires_at', 'created_at'];
     public $casts = ['hits' => 'int', 'max_hits' => 'int', 'expires_at' => 'date'];
 
     /**
