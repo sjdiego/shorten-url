@@ -14,20 +14,15 @@ class ShortenCreateController
 {
     public function __invoke(ShortenCreateRequest $request)
     {
-        $event = new ShortenCreated([
+        $attributes = [
             'uuid' => Str::uuid()->toString(),
             'slug' => Shorten::generateUniqueSlug(),
             'url' => $request->get('url'),
             'created_at' => Carbon::now()->toDateTimeString(),
-        ]);
+        ];
 
-        ShortenAggregateRoot::retrieve(Str::uuid()->toString())
-            ->createShorten($event->shortenAttributes)
-            ->persist();
+        event(new ShortenCreated($attributes));
 
-        return response()->json(
-            [$event->shortenAttributes],
-            JsonResponse::HTTP_OK
-        );
+        return response()->json($attributes, JsonResponse::HTTP_OK);
     }
 }

@@ -55,6 +55,16 @@ class Shorten extends Model
         return static::where('uuid', $uuid)->first();
     }
 
+    public static function findBySlug(string $slug)
+    {
+        try {
+            return static::whereSlug($slug)->sole();
+        } catch (ModelNotFoundException) {
+            event(new ShortenHitMissing($slug));
+            throw new ModelNotFoundException('The requested code was not found');
+        }
+    }
+
     public function addHit(): bool
     {
         /**
