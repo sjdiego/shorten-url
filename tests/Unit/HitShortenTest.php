@@ -25,6 +25,16 @@ class HitShortenTest extends TestCase
     }
 
     /** @test */
+    public function test_hit_event_shorten_missing()
+    {
+        $shorten = $this->emitShortenCreateEvent();
+
+        ShortenAggregateRoot::fake()
+            ->given(new ShortenHitMissing($shorten->uuid))
+            ->assertApplied(new ShortenHitMissing($shorten->uuid));
+    }
+
+    /** @test */
     public function test_hit_shorten_event_with_max_hits_reached()
     {
         $shorten = $this->emitShortenCreateEvent([
