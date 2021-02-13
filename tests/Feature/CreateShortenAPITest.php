@@ -18,7 +18,9 @@ class CreateShortenAPITest extends TestCase
         $this->post(
             route('shorten.create'),
             ShortenFactory::new()->makeOne()->toArray()
-        )->assertStatus(JsonResponse::HTTP_OK);
+        )
+            ->assertStatus(JsonResponse::HTTP_OK)
+            ->assertJsonStructure(["uuid", "slug", "url", "created_at"]);
     }
 
     /** @test */
@@ -27,7 +29,9 @@ class CreateShortenAPITest extends TestCase
         $this->post(
             route('shorten.create'),
             ShortenFactory::new(['url' => $this->faker->word])->makeOne()->toArray()
-        )->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        )
+            ->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+            ->assertJsonStructure(["errors"]);
     }
 
     /** @test */
@@ -39,7 +43,9 @@ class CreateShortenAPITest extends TestCase
                 'url' => $this->faker->url,
                 'expires_at' => 12,
             ]
-        )->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        )
+            ->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+            ->assertJsonStructure(["errors"]);
     }
 
     /** @test */
@@ -48,7 +54,9 @@ class CreateShortenAPITest extends TestCase
         $this->post(
             route('shorten.create'),
             ShortenFactory::new(['url' => null])->makeOne()->toArray()
-        )->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        )
+            ->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+            ->assertJsonStructure(["errors"]);
     }
 
     /** @test */
@@ -71,6 +79,8 @@ class CreateShortenAPITest extends TestCase
                 'sentences' => $this->faker->paragraphs(),
                 'email' => $this->faker->freeEmail
             ]
-        )->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        )
+            ->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+            ->assertJsonStructure(["errors"]);
     }
 }

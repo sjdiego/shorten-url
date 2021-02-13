@@ -20,8 +20,8 @@ class HitShortenAPITest extends TestCase
         $this
             ->get(route('shorten.check', $shorten->slug))
             ->assertStatus(JsonResponse::HTTP_OK)
-            ->assertSeeText('url')
-            ->assertDontSee('error');
+            ->assertJsonStructure(['uuid', 'code', 'url', 'hits', 'max_hits', 'expires_at'])
+            ->assertJsonMissing(['error']);
     }
 
     /** @test */
@@ -30,8 +30,7 @@ class HitShortenAPITest extends TestCase
         $this
             ->get(route('shorten.check', Str::random(12)))
             ->assertStatus(JsonResponse::HTTP_NOT_FOUND)
-            ->assertDontSeeText('url')
-            ->assertSee('error');
+            ->assertJsonStructure(['error']);
     }
 
     /** @test */
@@ -46,7 +45,8 @@ class HitShortenAPITest extends TestCase
         $this
             ->get(route('shorten.check', $shorten->slug))
             ->assertStatus(JsonResponse::HTTP_OK)
-            ->assertDontSeeText('error');
+            ->assertJsonStructure(['uuid', 'code', 'url', 'hits', 'max_hits', 'expires_at'])
+            ->assertJsonMissing(['error']);
     }
 
     /** @test */
@@ -61,7 +61,7 @@ class HitShortenAPITest extends TestCase
         $this
             ->get(route('shorten.check', $shorten->slug))
             ->assertStatus(JsonResponse::HTTP_FORBIDDEN)
-            ->assertSeeText('error');
+            ->assertJsonStructure(['uuid', 'url', 'code', 'error']);
     }
 
     /** @test */
@@ -75,7 +75,8 @@ class HitShortenAPITest extends TestCase
         $this
             ->get(route('shorten.check', $shorten->slug))
             ->assertStatus(JsonResponse::HTTP_OK)
-            ->assertDontSeeText('error');
+            ->assertJsonStructure(['uuid', 'code', 'url', 'hits', 'max_hits', 'expires_at'])
+            ->assertJsonMissing(['error']);
     }
 
     /** @test */
@@ -89,6 +90,6 @@ class HitShortenAPITest extends TestCase
         $this
             ->get(route('shorten.check', $shorten->slug))
             ->assertStatus(JsonResponse::HTTP_FORBIDDEN)
-            ->assertSeeText('error');
+            ->assertJsonStructure(['uuid', 'url', 'code', 'error']);
     }
 }
