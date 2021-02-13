@@ -2,8 +2,9 @@
 
 namespace App\Domain\Shorten;
 
-use App\Domain\Shorten\Events\ShortenCreated;
-use App\Domain\Shorten\Events\ShortenHit;
+use App\Domain\Shorten\Events\{ShortenCreated, ShortenHit, ShortenHitExpired, ShortenHitMaxReached};
+use App\Models\Shorten;
+use Illuminate\Support\Facades\Event;
 use Spatie\EventSourcing\AggregateRoots\AggregateRoot;
 
 /**
@@ -23,7 +24,15 @@ class ShortenAggregateRoot extends AggregateRoot
 
     public function addHit(string $shortenUuid): ShortenAggregateRoot
     {
-        $this->recordThat(new ShortenHit($shortenUuid));
+        Event::listen([
+            ShortenHit::class,
+            ShortenHitExpired::class,
+            ShortenHitMaxReached::class,
+        ], function ($event) {
+            $this->recordThat($event);
+        });
+
+        Shorten::uuid($shortenUuid)->addHit();
 
         return $this;
     }

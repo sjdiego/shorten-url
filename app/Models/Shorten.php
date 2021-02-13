@@ -72,16 +72,11 @@ class Shorten extends Model
         /**
          * Check if shortened link has an expiring date
          */
-        if (!is_null($this->expires_at)) {
-            $diff = CarbonInterval::compareDateIntervals(
-                Carbon::now(),
-                Carbon::parse($this->expires_at)
-            );
-
-            if ($diff) {
-                event(new ShortenHitExpired($this->uuid));
-                return false;
-            }
+        if (!is_null($this->expires_at) &&
+            (Carbon::parse($this->expires_at)->isBefore(Carbon::now()))
+        ) {
+            event(new ShortenHitExpired($this->uuid));
+            return false;
         }
 
         /**
