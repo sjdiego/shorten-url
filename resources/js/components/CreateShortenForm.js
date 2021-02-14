@@ -7,27 +7,37 @@ import SubmitButton from './SubmitButton';
 export default class CreateShortenForm extends React.Component {
     state = {
         url: '',
-        maxHits: null,
+        maxHits: 0,
         expiresAt: null,
     }
 
-    componentDidMount() {
-        console.log(process.env.MIX_API_BASEURL)
+    handleSetUrl = (event) => {
+        this.setState({url: event.target.value})
     }
-    
-    handleChange = (event) => {
-        this.setState({
-            url: event.target.value
-        })
+    handleSetMaxHits = (event) => {
+        this.setState({maxHits: event.target.value})
+    }
+    handleSetExpiresAt = (event) => {
+        this.setState({expiresAt: event.target.value})
     }
 
     handleSubmit = event => {
         event.preventDefault();
 
+        let params = {url: this.state.url}
+
+        if (this.state.maxHits) {
+            params.maxHits = this.state.maxHits
+        }
+
+        if (this.state.expiresAt) {
+            params.expiresAt = this.state.expiresAt
+        }
+
+        console.log(params)
+
         axios
-            .post(process.env.MIX_API_BASEURL + '/shorten/create', {
-                url: this.state.url,
-            })
+            .post(process.env.MIX_API_BASEURL + '/shorten/create', params)
             .then(res => {
                 console.log(res)
                 console.log(res.data)
@@ -43,11 +53,10 @@ export default class CreateShortenForm extends React.Component {
                         <div className="relative mb-2">
                             <label className="block text-xs font-semibold text-gray-500 mb-2">URL</label>
                             <input 
-                                id="url" 
-                                name="url" 
                                 placeholder="https://www.wikipedia.org" 
                                 autoComplete="off" 
-                                onChange={this.handleChange}
+                                onChange={this.handleSetUrl}
+                                required
                                 className="w-full pl-3 pr-10 py-2 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" 
                             />
                         </div>
@@ -62,12 +71,12 @@ export default class CreateShortenForm extends React.Component {
                             
                             <div className="mb-2">
                                 <label className="block text-xs font-semibold text-gray-500 mb-2">MAX VISITS</label>
-                                <input name="max_hits" className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="0" type="number" min="1" step="1" />
+                                <input onChange={this.handleSetMaxHits} className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="0" type="number" min="1" step="1" />
                             </div>
 
                             <div className="mb-2">
                                 <label className="block text-xs font-semibold text-gray-500 mb-2">EXPIRE DATE</label>
-                                <input name="expires_at" className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="31-12-2021" type="date" />
+                                <input onChange={this.handleSetExpiresAt} className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="31-12-2021" type="date" />
                             </div>
                         </div>
                     </form>
