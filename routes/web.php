@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn () => view('home'));
+Route::get('/', fn () => view('home'))->name('home');
 
-Route::fallback(fn () => redirect('/'));
+Route::fallback(fn () => view('404'));

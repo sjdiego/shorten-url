@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Shorten\Events\ShortenCreated;
-use App\Domain\Shorten\ShortenAggregateRoot;
 use App\Http\Requests\ShortenCreateRequest;
 use App\Models\Shorten;
 use Carbon\Carbon;

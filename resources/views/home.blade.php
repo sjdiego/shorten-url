@@ -3,5 +3,8 @@
 @section('title', 'Shortener URL')
 
 @section('content')
-    <h1>Test</h1>
+    <div class="container">
+        <h1>Test</h1>
+        <div id="example"></div>
+    </div>
 @endsection

@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $title ?? 'URL Shortener' }}</title>
+    <title>@yield('title', 'URL Shortener')</title>
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
 </head>
 <body>
-    @yield('content')
+    <div id="root">
+        <div class="h-screen w-screen bg-gray-100">
+            @yield('content')        
+        </div>
+    </div>
 
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
