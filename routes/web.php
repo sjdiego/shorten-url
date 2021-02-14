@@ -13,6 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ * Home page
+ */
 Route::get('/', fn () => view('home'))->name('home');
 
+/**
+ * Requested shortened URL
+ */
+Route::get('/{slug}', fn() => view('check'))->name('check');
+
+/**
+ * Other non-existant pages
+ */
 Route::fallback(fn () => view('404'));
