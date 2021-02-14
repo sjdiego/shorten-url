@@ -79,13 +79,13 @@ class CreateShortenAPITest extends TestCase
     }
 
     /** @test */
-    public function test_failure_on_create_shorten_with_invalid_expire_data()
+    public function test_failure_on_create_shorten_with_invalid_expire_date()
     {
         $this->post(
             route('shorten.create'),
             [
                 'url' => $this->faker->url,
-                'expires_at' => 12,
+                'expires_at' => $this->faker->biasedNumberBetween(0, 100),
             ]
         )
             ->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
