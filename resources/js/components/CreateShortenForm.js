@@ -129,4 +129,8 @@ export default class CreateShortenForm extends Component {
     }
 }
 
-ReactDOM.render(<CreateShortenForm />, document.getElementById('create-shorten-form'));
+const element = document.getElementById('create-shorten-form');
+
+if (element) {
+    ReactDOM.render(<CreateShortenForm />, element);
+}
