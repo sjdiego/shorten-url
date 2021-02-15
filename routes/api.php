@@ -22,12 +22,12 @@ Route::prefix('v1')->group(function () {
     Route::prefix('shorten')->group(function () {
         // Creates a new shorten url
         Route::post('create', ShortenCreateController::class)
-            ->middleware(['throttle:3,30'])
+            ->middleware(['throttle:5'])
             ->name('shorten.create');
 
         // Check if a provided slug exists in database and is valid
         Route::get('check/{slug}', ShortenCheckController::class)
-            ->middleware(['throttle:30,60'])
+            ->middleware(['throttle:30'])
             ->name('shorten.check');
     });
 });
