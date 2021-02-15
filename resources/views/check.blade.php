@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Redirecting...')
+@section('title', env('APP_NAME', 'Shortener URL'))
 
 @section('content')
     <div class="flex items-center">
