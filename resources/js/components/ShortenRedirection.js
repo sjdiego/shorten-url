@@ -20,6 +20,10 @@ export default class ShortenRedirection extends Component {
                         error: null
                     })
                 }
+
+                setTimeout((url) => {
+                    window.location.href = this.state.url;
+                }, 5000)
             })
             .catch(err => {
                 if (err.response.data && err.response.data.error) {
@@ -37,10 +41,10 @@ export default class ShortenRedirection extends Component {
         if (this.state.url) {
             return (
                 <>
-                    <p className="text-2xl md:text-3xl font-light leading-normal">Please wait...</p>
+                    <p className="text-2xl md:text-3xl font-light leading-normal animate-pulse">Please wait...</p>
                     <p className="text-lg mb-4">You are being redirected to:</p>
                     <p className="text-sm font-mono whitespace-normal break-normal md:break-all">
-                        {this.state.url}
+                        <a href={this.state.url}>{this.state.url}</a>
                     </p>
                 </>
             )
@@ -48,7 +52,7 @@ export default class ShortenRedirection extends Component {
             return (
                 <>
                     <p className="text-2xl md:text-3xl font-light leading-normal">Sorry!</p>
-                    <p className="text-lg mb-4">The code <code>{ this.state.code }</code> is invalid:</p>
+                    <p className="text-lg mb-4">The code <span className="text-red-500 font-mono border-red-400 rounded-2xl mx-2 bg-white border-2 p-1">{ this.state.code }</span> is invalid:</p>
                     <p className="text-sm font-mono whitespace-normal break-normal md:break-all">
                         {this.state.error}
                     </p>
