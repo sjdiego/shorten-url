@@ -4,8 +4,6 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
-const { default: CreateShortenForm } = require('./components/CreateShortenForm');
-
 require('./bootstrap');
 
 /**
@@ -15,4 +13,4 @@ require('./bootstrap');
  */
 
 require('./components/CreateShortenForm');
-require('./components/ToggleButton');
+require('./components/ShortenRedirection');
