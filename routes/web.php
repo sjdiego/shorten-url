@@ -21,7 +21,7 @@ Route::get('/', fn () => view('home'))->name('home');
 /**
  * Requested shortened URL
  */
-Route::get('/{slug}', fn() => view('check'))->name('check');
+Route::get('/{slug}', fn($slug) => view('check', ['code' => $slug]))->name('check');
 
 /**
  * Other non-existant pages
