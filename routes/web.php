@@ -13,8 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/**
+ * Home page
+ */
+Route::get('/', fn () => view('home'))->name('home');
 
-Route::fallback(fn () => redirect('/'));
+/**
+ * Requested shortened URL
+ */
+Route::get('/{slug}', fn($slug) => view('check', ['code' => $slug]))->name('check');
+
+/**
+ * Other non-existant pages
+ */
+Route::fallback(fn () => view('404'));

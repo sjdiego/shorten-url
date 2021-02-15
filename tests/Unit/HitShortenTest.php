@@ -25,7 +25,7 @@ class HitShortenTest extends TestCase
     }
 
     /** @test */
-    public function test_hit_event_shorten_missing()
+    public function test_hit_shorten_event_missing()
     {
         $shorten = $this->emitShortenCreateEvent();
 
