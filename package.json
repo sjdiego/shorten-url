@@ -26,6 +26,7 @@
         "tailwindcss": "^2.0.3"
     },
     "dependencies": {
-        "aos": "^2.3.4"
+        "aos": "^2.3.4",
+        "react-flatpickr": "^3.10.6"
     }
 }

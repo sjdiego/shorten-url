@@ -7,6 +7,7 @@ import InputForm from './InputForm';
 import ToggleButton from './ToggleButton';
 import SubmitButton from './SubmitButton';
 import ShortenResponse from './ShortenResponse';
+import DatePicker from "./DatePicker";
 
 export default class CreateShortenForm extends Component {
     state = {
@@ -34,8 +35,8 @@ export default class CreateShortenForm extends Component {
     handleSetMaxHits = (event) => {
         this.setState({maxHits: event.target.value})
     }
-    handleSetExpiresAt = (event) => {
-        this.setState({expiresAt: event.target.value})
+    handleSetExpiresAt = (dateObj, dateStr, instance) => {
+        this.setState({expiresAt: dateStr})
     }
 
     handleSubmit = event => {
@@ -115,10 +116,8 @@ export default class CreateShortenForm extends Component {
                                 handler={this.handleSetMaxHits}
                             />
 
-                            <InputForm
-                                type={"date"}
+                            <DatePicker
                                 label={"EXPIRE DATE"}
-                                placeholder={"31/12/2020"}
                                 handler={this.handleSetExpiresAt}
                             />
                         </div>
