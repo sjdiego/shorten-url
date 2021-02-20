@@ -1,0 +1,60 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Shortener URL",
+        "description": "An API for Shortener URL",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/shorten/check/{slug}": {
+            "get": {
+                "summary": "Checks for Shorten by code",
+                "description": "It returns the data of Shorten related to provided code",
+                "operationId": "App\\Http\\Controllers\\ShortenCheckController::__invoke",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Code of Shorten",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The Shorten code exists and is not expired"
+                    },
+                    "403": {
+                        "description": "Unable to get data of requested Shorten"
+                    },
+                    "404": {
+                        "description": "Shorten not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/shorten/create": {
+            "post": {
+                "summary": "Creates a Shorten record",
+                "description": "It returns the data of created Shorten with provided data",
+                "operationId": "App\\Http\\Controllers\\ShortenCreateController::__invoke",
+                "responses": {
+                    "200": {
+                        "description": "Shorten is created successfully"
+                    },
+                    "422": {
+                        "description": "Provided data for Shorten is not valid"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

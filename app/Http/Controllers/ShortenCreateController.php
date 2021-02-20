@@ -12,6 +12,22 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ShortenCreateController
 {
+    /**
+     * Class that manages Shorten creation model
+     *
+     * @param ShortenCreateRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Post(
+     *     path="/api/v1/shorten/create",
+     *     summary="Creates a Shorten record",
+     *     description="It returns the data of created Shorten with provided data",
+     *     @OA\Response(response=200, description="Shorten is created successfully"),
+     *     @OA\Response(response=422, description="Provided data for Shorten is not valid"),
+     *     @OA\Response(response=500, description="Internal server error")
+     * )
+     */
     public function __invoke(ShortenCreateRequest $request)
     {
         $attributes = [
