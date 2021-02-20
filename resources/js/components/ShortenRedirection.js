@@ -61,7 +61,7 @@ export default class ShortenRedirection extends Component {
             )
         }
 
-        return null
+        return (<p>Loading...</p>)
     }
 }
 
