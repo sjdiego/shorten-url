@@ -52,7 +52,11 @@ export default class CreateShortenForm extends Component {
         }
 
         axios
-            .post(process.env.MIX_API_BASEURL + '/shorten/create', params)
+            .post('/shorten/create', params, {
+                baseURL: process.env.MIX_API_BASEURL,
+                timeout: 3000,
+                responseType: 'json',
+            })
             .then(res => {
                 if (res.status === 200 && res.data.code) {
                     this.setState({
@@ -63,18 +67,21 @@ export default class CreateShortenForm extends Component {
                 }
             })
             .catch(error => {
-                if (error.response.data.error) {
-                    this.setState({error: error.response.data.error})
-                } else if (error.response.data.errors) {
-                    let errors = [];
-                    Object.values(error.response.data.errors).forEach(key => errors.push(key));
-
-                    this.setState({error: _.join(errors, '. ')})
+                if (error.response) {
+                    if (error.response.data?.error) {
+                        this.setState({error: error.response.data.error})
+                    } else if (error.response.data?.message) {
+                        this.setState({error: error.response.data.message})
+                    } else if (error.response.data?.errors) {
+                        let errors = [];
+                        Object.values(error.response.data.errors).forEach(key => errors.push(key));
+                        this.setState({error: _.join(errors, '. ')})
+                    }
+                } else if (error.request) {
+                    this.setState({error: 'Network error'})
                 } else {
-                    this.setState({error: error.message})
                     console.log('Error', error.message)
                 }
-
                 this.setState({code: null, submitDisabled: false})
             })
     }
