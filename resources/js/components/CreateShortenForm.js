@@ -62,12 +62,19 @@ export default class CreateShortenForm extends Component {
                     })
                 }
             })
-            .catch(err => {
-                if (err.response.request && err.response.request.response) {
-                    this.setState({error: err.response.request.response })
-                } else if (err.response.statusText) {
-                    this.setState({error: err.response.statusText })
+            .catch(error => {
+                if (error.response.data.error) {
+                    this.setState({error: error.response.data.error})
+                } else if (error.response.data.errors) {
+                    let errors = [];
+                    Object.values(error.response.data.errors).forEach(key => errors.push(key));
+
+                    this.setState({error: _.join(errors, '. ')})
+                } else {
+                    this.setState({error: error.message})
+                    console.log('Error', error.message)
                 }
+
                 this.setState({code: null, submitDisabled: false})
             })
     }

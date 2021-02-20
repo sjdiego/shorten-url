@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -37,14 +38,22 @@ class ShortenCreateRequest extends FormRequest
 
     public function failedValidation(Validator $validator): JsonResponse
     {
-        $errors = (new ValidationException($validator))->errors();
-
         throw new HttpResponseException(
-            response()->json(
-                [
-                    'errors' => $errors
-                ],
+            response()->json([
+                'errors' => (new ValidationException($validator))->errors()
+            ],
                 JsonResponse::HTTP_UNPROCESSABLE_ENTITY
+            )
+        );
+    }
+
+    public function failedAuthorization()
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'error' => (new AuthorizationException())->getMessage()
+            ],
+                JsonResponse::HTTP_FORBIDDEN
             )
         );
     }

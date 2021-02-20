@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Shortener URL')
+@section('title', env('APP_NAME', 'Shortener URL'))
 
 @section('content')
     <div class="container">
