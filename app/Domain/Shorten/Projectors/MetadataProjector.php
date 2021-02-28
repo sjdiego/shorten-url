@@ -30,8 +30,7 @@ class MetadataProjector extends Projector
                 'body' => request()->all(),
             ];
 
-            $storedEvent->meta_data['source_ip'] = request()->getClientIp();
-            $storedEvent->meta_data['useragent'] = request()->userAgent();
+            $storedEvent->aggregate_uuid = strlen($storedEvent->aggregate_uuid) > 0 ?: Uuid::uuid4()->toString();
 
             $repository->update($storedEvent);
         }
