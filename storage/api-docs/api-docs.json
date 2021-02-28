@@ -37,9 +37,17 @@
         },
         "/api/v1/shorten/create": {
             "post": {
+                "tags": [
+                    "ShortenCreate"
+                ],
                 "summary": "Creates a Shorten record",
                 "description": "It returns the data of created Shorten with provided data",
                 "operationId": "App\\Http\\Controllers\\ShortenCreateController::__invoke",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {}
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Shorten is created successfully"

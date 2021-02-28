@@ -21,11 +21,25 @@ class ShortenCreateController
      *
      * @OA\Post(
      *     path="/api/v1/shorten/create",
+     *     tags={"ShortenCreate"},
      *     summary="Creates a Shorten record",
      *     description="It returns the data of created Shorten with provided data",
      *     @OA\Response(response=200, description="Shorten is created successfully"),
      *     @OA\Response(response=422, description="Provided data for Shorten is not valid"),
-     *     @OA\Response(response=500, description="Internal server error")
+     *     @OA\Response(response=500, description="Internal server error"),
+     *     @OA\RequestBody(
+     *        @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"url"},
+     *                 @OA\Property(
+     *                      property="url",
+     *                      type="string",
+     *                      description="URL of the Shorten"
+     *                 ),
+     *             )
+     *         )
+     *     )
      * )
      */
     public function __invoke(ShortenCreateRequest $request)
