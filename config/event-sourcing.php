@@ -6,9 +6,7 @@ return [
      * These directories will be scanned for projectors and reactors. They
      * will be registered to Projectionist automatically.
      */
-    'auto_discover_projectors_and_reactors' => [
-        app()->path(),
-    ],
+    'auto_discover_projectors_and_reactors' => [],
 
     /*
      * Projectors are classes that build up projections. You can create them by performing
@@ -16,6 +14,8 @@ return [
      * Projectors can be registered in this array or a service provider.
      */
     'projectors' => [
+        App\Domain\Shorten\Projectors\ShortenProjector::class,
+        App\Domain\Shorten\Projectors\MetadataProjector::class,
         // App\Projectors\YourProjector::class
     ],
 
