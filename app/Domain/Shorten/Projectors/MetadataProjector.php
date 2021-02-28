@@ -3,7 +3,6 @@
 namespace App\Domain\Shorten\Projectors;
 
 use App\Domain\Shorten\Events\{ShortenCreated, ShortenHit, ShortenHitExpired, ShortenHitMaxReached, ShortenHitMissing};
-use Ramsey\Uuid\Uuid;
 use Spatie\EventSourcing\EventHandlers\Projectors\Projector;
 use Spatie\EventSourcing\Facades\Projectionist;
 use Spatie\EventSourcing\StoredEvents\Repositories\StoredEventRepository;
@@ -29,8 +28,6 @@ class MetadataProjector extends Projector
                 'useragent' => request()->userAgent(),
                 'body' => request()->all(),
             ];
-
-            $storedEvent->aggregate_uuid = strlen($storedEvent->aggregate_uuid) > 0 ?: Uuid::uuid4()->toString();
 
             $repository->update($storedEvent);
         }
