@@ -11,11 +11,20 @@ const mix = require('laravel-mix');
  |
  */
 
+/**
+ * Frontend
+ */
 mix.js('resources/js/app.js', 'public/js')
     .react()
     .postCss('resources/css/app.css', 'public/css', [
         require("tailwindcss"),
-    ])
-    .version()
-    .extract(['react'])
-    .disableNotifications();
+    ]);
+
+/**
+ * Backend
+ */
+mix.ts('resources/js/backend/app.js', 'public/js/backend')
+    .react()
+    .postCss('resources/css/backend.css', 'public/css', [
+        require("tailwindcss"),
+    ]);
