@@ -9,7 +9,7 @@ class LoginController
     public function render()
     {
         return Inertia::render('LoginPage', [
-            'authRoute' => route('backend.auth')
+            'authRoute' => route('auth')
         ]);
     }
 

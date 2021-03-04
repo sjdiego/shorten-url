@@ -11,7 +11,7 @@ function handleSubmit(e: React.FormEvent) {
 const LoginForm = () => (
     <form className="mt-10" method="POST" onSubmit={handleSubmit}>
         <InputForm
-            type={InputType.Text}
+            type={InputType.Email}
             label="E-Mail"
             id="loginUser"
             name="user"
