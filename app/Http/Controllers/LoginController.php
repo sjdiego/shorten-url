@@ -8,6 +8,13 @@ class LoginController
 {
     public function render()
     {
-        return Inertia::render('Login');
+        return Inertia::render('LoginPage', [
+            'authRoute' => route('backend.auth')
+        ]);
+    }
+
+    public function auth()
+    {
+        dd(request()->all());
     }
 }

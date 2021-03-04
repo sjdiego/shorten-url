@@ -32,13 +32,16 @@ Route::get('/{slug}', fn($slug) => view('check', ['code' => $slug]))
  * Backend routes
  */
 Route::prefix('backend')->group(function () {
-    // Login
-    Route::get('login', [LoginController::class, 'render'])->name('login');
-
     // Main dashboard: list shortens
     Route::get('/', [ShortenListController::class, 'list'])
         ->middleware(['auth'])
         ->name('backend.list');
+
+    // Login
+    Route::middleware(['guest'])->group(function () {
+        Route::get('login', [LoginController::class, 'render'])->name('backend.login');
+        Route::post('auth', [LoginController::class, 'auth'])->name('backend.auth');
+    });
 });
 
 /**

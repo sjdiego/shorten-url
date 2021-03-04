@@ -14,8 +14,8 @@ yarn-error.log
 docker-compose.yml
 docker/mysql/data/*
 .idea
-public/css/*.css
-public/js/*.js
-public/css/*.txt
-public/js/*.txt
+public/css/**/*.css
+public/js/**/*.js
+public/css/**/.txt
+public/js/**/*.txt
 public/mix-manifest.json
