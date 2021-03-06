@@ -1,10 +1,10 @@
 # URL Shortener
 Yes, another URL shortener!
 
----
 This is a small pet project to practise with TDD and Event Sourcing with Laravel.
 
-Frontend is made using ReactJS, which is the first time that I use it.
+Frontend is made using ReactJS, which is the first time that I use it. 
+I'm also adding a backend using ReactJS + Inertia + TypeScript.
 
 ### What does this application
 It's simple and not very original: you give a very long URL and the application automatically
