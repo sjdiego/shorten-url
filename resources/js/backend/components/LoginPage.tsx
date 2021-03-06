@@ -1,8 +1,11 @@
-import { usePage } from "@inertiajs/inertia-react";
 import React from "react";
 import LoginForm from "./LoginForm";
 
-export default class LoginPage extends React.Component {
+interface LoginFormProps {
+    authRoute: string
+}
+
+export default class LoginPage extends React.Component<LoginFormProps> {
     render(): React.ReactNode {
         return (
             <div className="flex flex-col h-screen bg-gray-400">
@@ -15,7 +18,7 @@ export default class LoginPage extends React.Component {
                             Login
                         </h2>
 
-                        <LoginForm />
+                        <LoginForm authRoute={this.props.authRoute} />
                     </div>
                 </div>
             </div>

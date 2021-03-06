@@ -1,7 +1,20 @@
-import React from "react";
-import { InputFormConfig } from "../models"
+import React, { FormEventHandler } from "react";
+import { InputType } from "../InputType";
 
-export default class InputForm extends React.PureComponent<InputFormConfig> {
+interface InputFormConfig {
+    label: string;
+    id: string;
+    name: string;
+    type: InputType;
+    required: boolean;
+    handler?: FormEventHandler;
+}
+
+export default class InputForm extends React.Component<InputFormConfig, {}> {
+    constructor(props: InputFormConfig) {
+        super(props);
+    }
+
     render(): React.ReactNode {
         return (
             <>
@@ -21,6 +34,7 @@ export default class InputForm extends React.PureComponent<InputFormConfig> {
                     placeholder={this.props.label}
                     autoComplete="no"
                     required={this.props.required}
+                    onChange={this.props.handler}
                 />
             </>
         )
