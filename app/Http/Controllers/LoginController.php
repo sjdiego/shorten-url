@@ -11,7 +11,7 @@ class LoginController
 {
     public function render()
     {
-        return Inertia::render('LoginPage', [
+        return Inertia::render('login/Page', [
             'authRoute' => route('auth')
         ]);
     }
@@ -23,20 +23,14 @@ class LoginController
                 'email' => $request->get('user'),
                 'password' => $request->get('password'),
             ]);
-            
+
             if (!Auth::check()) {
                 throw new \Exception('The provided data is not correct. Please verify the details and try again.');
             }
 
-            return redirect()->route('shorten.list');
+            return Inertia::render('shorten/List');
         } catch (\Exception $e) {
-            return response()->json(
-                [
-                    'error' => $e->getMessage(),
-                    'data' => $request->except('password'),
-                ],
-                JsonResponse::HTTP_FORBIDDEN
-            );
+            return back()->withErrors($e->getMessage());
         }
     }
 

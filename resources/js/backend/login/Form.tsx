@@ -1,14 +1,16 @@
 import React from "react";
 import InputForm from "./InputForm";
+import { LoginFormProps } from "./Page";
 import { InputType } from "../InputType";
 import { Inertia } from "@inertiajs/inertia"
+import AlertBox, { AlertType } from "../components/AlertBox";
 
 interface LoginFormState {
     user: string | null,
     password: string | null
 }
 
-export default class LoginForm extends React.Component<{authRoute: string}, LoginFormState> {
+export default class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -30,12 +32,16 @@ export default class LoginForm extends React.Component<{authRoute: string}, Logi
 
     handleSubmit(event: React.FormEvent) {
         event.preventDefault();
-        Inertia.post(this.props.authRoute, this.state)
+        Inertia.post(this.props.authRoute, this.state, {preserveState: true})
     }
     
     render(): React.ReactNode {
         return (
-            <form className="mt-10" method="POST" onSubmit={this.handleSubmit}>
+            <form className="mt-10" onSubmit={this.handleSubmit}>
+                {Object.entries(this.props.errors).length > 0 &&
+                    <AlertBox type={AlertType.Danger} message={this.props.errors} />
+                }
+
                 <InputForm
                     type={InputType.Email}
                     label="E-Mail"

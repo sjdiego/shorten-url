@@ -18,7 +18,7 @@ render(
     <InertiaApp
         initialPage={JSON.parse(app.dataset.page)}
         resolveComponent={(name) =>
-            import(`./components/${name}`).then((module) => module.default)
+            import(`./${name}`).then((module) => module.default)
         }
     />,
     app
