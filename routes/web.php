@@ -34,6 +34,7 @@ Route::get('/{slug}', fn($slug) => view('check', ['code' => $slug]))
 Route::prefix('backend')->group(function () {
     Route::middleware(['auth'])->group(function () {
         Route::get('/', [ShortenListController::class, 'list'])->name('shorten.list');
+        Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });
 
     // Login
