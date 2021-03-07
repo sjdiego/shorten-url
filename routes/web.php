@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ShortenListController;
+use App\Http\Controllers\Backend\{LoginController, BackendController};
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +31,7 @@ Route::get('/{slug}', fn($slug) => view('check', ['code' => $slug]))
  */
 Route::prefix('backend')->group(function () {
     Route::middleware(['auth'])->group(function () {
-        Route::get('/', [ShortenListController::class, 'list'])->name('shorten.list');
+        Route::get('/', [BackendController::class, 'render'])->name('dashboard');
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });
 

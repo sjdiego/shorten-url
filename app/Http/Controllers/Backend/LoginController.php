@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Requests\LoginRequest;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -28,7 +27,7 @@ class LoginController
                 throw new \Exception('The provided data is not correct. Please verify the details and try again.');
             }
 
-            return Inertia::render('shorten/List');
+            return redirect()->route('dashboard');
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());
         }
