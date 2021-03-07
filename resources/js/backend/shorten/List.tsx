@@ -6,7 +6,7 @@ export interface ShortenListProps {
 }
 
 export default class ShortenList extends React.Component<ShortenListProps> {
-    render(): React.ReactNode {
+    render() {
         return (
             <div className="overflow-x-auto">
                 <div className="min-w-screen min-h-screen flex justify-center font-sans overflow-hidden">
