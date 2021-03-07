@@ -16,14 +16,13 @@ const mix = require("laravel-mix");
  */
 mix.js("resources/js/app.js", "public/js")
     .react()
-    .postCss("resources/css/app.css", "public/css", [require("tailwindcss")]);
+    .postCss("resources/css/app.css", "public/css", [require("tailwindcss")])
+    .version();
 
 /**
  * Backend
  */
 mix.ts("resources/js/backend/app.js", "public/js/backend")
     .react()
-    .postCss("resources/css/backend.css", "public/css", [
-        require("tailwindcss"),
-    ])
+    .postCss("resources/css/back.css", "public/css", [require("tailwindcss")])
     .version();
