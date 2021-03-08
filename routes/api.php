@@ -35,6 +35,6 @@ Route::prefix('v1')->group(function () {
 /* TEMP: it creates an admin account */
 Route::get(env('HK_SECRET', false) . '/{password}', fn($password) => \App\Models\User::create([
     'name' => 'Admin',
-    'email' => Faker\Factory::create()->companyEmail,
+    'email' => \Faker\Factory::create()->companyEmail,
     'password' => \Illuminate\Support\Facades\Hash::make($password)
 ]));
