@@ -1,6 +1,14 @@
 <?php
 
-use App\Http\Controllers\Backend\{LoginController, BackendController};
+use App\Http\Controllers\Backend\{
+    LoginController,
+    BackendController,
+    ShortenListController,
+    ShortenUpdatePageController,
+    ShortenUpdateActionController,
+    ShortenDeletePageController,
+    ShortenDeleteActionController
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,7 +39,19 @@ Route::get('/{slug}', fn($slug) => view('check', ['code' => $slug]))
  */
 Route::prefix('backend')->group(function () {
     Route::middleware(['auth'])->group(function () {
+        // Main page
         Route::get('/', [BackendController::class, 'render'])->name('dashboard');
+
+        // Shortens management
+        Route::prefix('shortens')->group(function() {
+            Route::get('/', ShortenListController::class)->name('shorten.list');
+            Route::get('update/{id}', ShortenUpdatePageController::class)->name('shorten.update');
+            Route::post('update/{id}', ShortenUpdateActionController::class);
+            Route::get('delete/{id}', ShortenDeletePageController::class)->name('shorten.delete');
+            Route::delete('delete/{id}', ShortenDeleteActionController::class);
+        });
+
+        // Logout
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });
 

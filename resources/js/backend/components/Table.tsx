@@ -5,6 +5,7 @@ import TableHeaders from './TableHeaders';
 interface TableProps {
     columns: string[],
     items: object,
+    path: string
 }
 
 export default class Table extends React.Component<TableProps> {
@@ -13,8 +14,12 @@ export default class Table extends React.Component<TableProps> {
             <>
                 <table className="min-w-max w-full table-auto">
                     <TableHeaders headers={this.props.columns} />
-                    <TableBody columns={this.props.columns} items={this.props.items} />
-                </table>    
+                    <TableBody
+                        columns={this.props.columns}
+                        items={this.props.items}
+                        path={this.props.path}
+                    />
+                </table>
             </>
         )
     }

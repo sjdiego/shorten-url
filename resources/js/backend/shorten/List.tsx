@@ -12,7 +12,11 @@ export default class ShortenList extends React.Component<ShortenListProps> {
                 <div className="min-w-screen min-h-screen flex justify-center font-sans overflow-hidden">
                     <div className="w-full lg:w-5/6">
                         <div className="bg-white shadow-md rounded my-6">
-                            <Table columns={["id", "url", "slug"]} items={this.props.items} />
+                            <Table
+                              columns={["id", "url", "slug", "hits"]}
+                              items={this.props.items}
+                              path={"/backend/shortens"}
+                            />
                         </div>
                     </div>
                 </div>
